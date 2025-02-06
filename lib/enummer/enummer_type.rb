@@ -20,6 +20,7 @@ module Enummer
     # @return Numeric Numeric representation of values
     def serialize(value)
       return unless value
+      return value if value.is_a?(Integer)
 
       Array.wrap(value).sum { |value_name| @values.fetch(value_name, 0) }
     end
@@ -40,6 +41,8 @@ module Enummer
     # @param [Array<Symbol>] value Current value represented as one or more symbols or strings
     # @return [Array<Symbol>] Current value represented as symbols
     def cast(value)
+      return value if value.is_a?(Integer)
+      
       Array.wrap(value).map(&:to_sym)
     end
   end
